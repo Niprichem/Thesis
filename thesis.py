@@ -1,6 +1,8 @@
 import requests
 import json
 
+import time
+
 
 def get_user_groups(params):
     response = requests.get('https://api.vk.com/method/groups.get', params).json()
@@ -46,6 +48,9 @@ def main():
             'v': version
         }
 
+        if i % 3 == 0:
+            time.sleep(1)
+
         response = get_user_groups(params)
         if response.get('error'):
             continue
@@ -57,6 +62,10 @@ def main():
 
     result_list = []
     for group_id in group_id_set:
+
+        if i % 3 == 0:
+            time.sleep(1)
+
         result_list.append(get_group_by_id(group_id, version))
 
     filename = 'groups.json'
